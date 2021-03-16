@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import {postInfo} from "../network/home";
+import {postInfo} from "network/home";
 
 export default {
   data() {

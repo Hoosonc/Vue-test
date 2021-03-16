@@ -1,3 +1,7 @@
+const path = require('path')
+function resolve (dir) {
+    return path.join(__dirname, dir)
+}
 module.exports = {
     publicPath: "./", // 公共路径(必须有的)
     outputDir: "dist", // 输出文件目录
@@ -9,6 +13,26 @@ module.exports = {
         port: 8080,
         proxy: null
     },
+    chainWebpack: (config)=>{
+        config.resolve.alias
+            .set('@', resolve('src'))
+            .set('assets',resolve('src/assets'))
+            .set('components',resolve('src/components'))
+            .set('network',resolve('src/network'))
+            .set('views',resolve('src/views'))
+    },
+/*    configureWebpack: {
+        resolve: {
+            alias: {
+                '@': 'src',
+                'assets': '@/assets',
+                'common': '@/common',
+                'components': '@/components',
+                'network': '@/network',
+                'views': '@/views',
+            }
+        }
+    },*/
     //去掉console
     configureWebpack: (config) => {
         // 判断为生产模式下，因为开发模式我们是想保存console的
