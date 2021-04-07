@@ -105,6 +105,7 @@
 
 <script>
 import {postInfo} from "network/home";
+import axios from "axios";
 
 export default {
   data() {
@@ -168,22 +169,55 @@ export default {
   },
   methods: {
     onSubmit() {
-      postInfo(this.form.name, this.form.idNumber, this.form.nation,
-          this.form.politics_status, this.form.education_background, this.form.eDate,
-          this.form.tg, this.form.phone, this.form.wb, this.form.qq, this.form.email,
-          this.form.devId, this.form.post, this.form.rDate, this.form.txz, this.form.dw).then(res =>{
+      axios({
+        url: 'http://localhost:8888/addInfo',
+        method: 'post',
+        params: {
+          name: this.form.name,
+          idNumber: this.form.idNumber,
+          nation: this.form.nation,
+          politics_status: this.form.politics_status,
+          education_background: this.form.education_background,
+          eDate: this.form.eDate, // 入团年月
+          tg: this.form.tg,
+          phone: this.form.phone,
+          wb: this.form.wb,  // 微博
+          qq: this.form.qq,
+          email: this.form.email,
+          devId: this.form.devId, // 发展团员编号
+          post: this.form.post, // 团内现任职务
+          rDate: this.form.rDate, // 任职年月
+          txz: this.form.txz,
+          dw: this.form.dw
+        }
+
+      }).then(res => {
         this.$message.success("提交成功")
-        console.log(res)
         setTimeout(() =>{
           this.$router.push({
             name: 'success',
-            params: {...res}
+            params: {...res.data}
           })
         },1500)
-
-      }).catch(err =>{
-        console.log(err);
+      }).catch(err => {
+        this.$message.success(err)
       })
+      // postInfo(this.form.name, this.form.idNumber, this.form.nation,
+      //     this.form.politics_status, this.form.education_background, this.form.eDate,
+      //     this.form.tg, this.form.phone, this.form.wb, this.form.qq, this.form.email,
+      //     this.form.devId, this.form.post, this.form.rDate, this.form.txz, this.form.dw).then(res =>{
+      //   this.$message.success("提交成功")
+      //   console.log(res)
+      //   setTimeout(() =>{
+      //     this.$router.push({
+      //       name: 'success',
+      //       params: {...res}
+      //     })
+      //   },1500)
+      //
+      // }).catch(err =>{
+      //   console.log(err);
+      // })
     }
   },
   watch: {
